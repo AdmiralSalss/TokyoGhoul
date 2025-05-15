@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Ghoul | Negr Pidoras</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="database.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0; 
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1; 
+        }
+        
+        main, header, footer, .music-controls {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay loop muted playsinline preload="auto" poster="https://wallpapercave.com/wp/wp5207342.jpg">
+            <source src="video-bg.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <audio id="background-music" loop preload="auto">
+        <source src="dope17, mapt0v - болен (slowed + reverb).mp4" type="video/mp4">
+    </audio>
+
+    <header>
+        <div class="logo">
+            <h1>東京喰種</h1>
+            <p class="tagline">Мир между светом и тьмой</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#quotes">Цитаты</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button id="loginBtn" class="btn-auth">Вход</button>
+            <button id="registerBtn" class="btn-auth">Регистрация</button>
+            <button id="logoutBtn" class="btn-auth" style="display: none;">Выход</button>
+            <span id="userDisplay" class="user-display"></span>
+        </div>
+    </header>
+
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div id="loginForm" class="auth-form">
+                <h3>Вход на сайт</h3>
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Пароль" required>
+                </div>
+                <button id="submitLogin" class="btn-primary">Войти</button>
+                <p class="form-switch">Нет аккаунта? <a href="#" id="switchToRegister">Зарегистрироваться</a></p>
+            </div>
+            
+            <div id="registerForm" class="auth-form" style="display: none;">
+                <h3>Регистрация</h3>
+                <div class="form-group">
+                    <input type="text" id="registerName" placeholder="Имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPassword" placeholder="Пароль" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPasswordConfirm" placeholder="Подтвердите пароль" required>
+                </div>
+                <button id="submitRegister" class="btn-primary">Зарегистрироваться</button>
+                <p class="form-switch">Уже есть аккаунт? <a href="#" id="switchToLogin">Войти</a></p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Твоя душа - твоя сила</h2>
+                <p>"В этом мире закон сильного правит всем. Выживает сильнейший. Если ты такой же сильный, как я, то живи. Если хочешь украсть мою силу, то попробуй... если сможешь." — Канеки Кен</p>
+                <a href="#about" class="btn-primary">Исследовать</a>
+            </div>
+        </section>
+
+        <section id="about" class="dark-section">
+            <div class="container">
+                <h2 class="section-title">О проекте</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Добро пожаловать в мрачный и захватывающий мир, вдохновленный эстетикой Tokyo Ghoul и эмо-культурой. Здесь тьма и свет сосуществуют в идеальном балансе, создавая уникальную атмосферу меланхолии и красоты.</p>
+                        <p>Этот проект - проявление внутренней борьбы, поиска себя и принятия своей истинной природы. Как Канеки, мы все находимся между двумя мирами, пытаясь найти свой путь.</p>
+                    </div>
+                    <div class="about-image">
+                        <div class="mask-container">
+                            <div class="mask"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quotes" class="dark-section">
+            <div class="container">
+                <h2 class="section-title">Мрачные мысли</h2>
+                <div class="quotes-container">
+                    <div class="quote">
+                        <p>"Лучше быть тем, кто причиняет боль, чем тем, кто её терпит."</p>
+                    </div>
+                    <div class="quote">
+                        <p>"Мир — это ошибка, полная парадоксов. Но нам остаётся только жить в нём."</p>
+                    </div>
+                    <div class="quote">
+                        <p>"Что лучше: быть хорошим человеком, который делает ужасные вещи, или ужасным человеком, который делает хорошие вещи?"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title">Система тикетов</h2>
+                <div class="tickets-wrapper">
+                    <div class="tickets-menu">
+                        <button id="createTicketBtn" class="btn-primary active">Создать тикет</button>
+                        <button id="myTicketsBtn" class="btn-primary">Мои тикеты</button>
+                    </div>
+                    
+                    <div id="createTicketForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="ticketName" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="ticketEmail" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="ticketSubject" placeholder="Тема" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="ticketMessage" placeholder="Описание проблемы" required></textarea>
+                        </div>
+                        <button id="submitTicket" class="btn-primary">Отправить тикет</button>
+                    </div>
+                    
+                    <div id="myTicketsList" class="tickets-list" style="display: none;">
+                        <div class="no-tickets">У вас пока нет созданных тикетов</div>
+                        <div class="tickets-container"></div>
+                    </div>
+                    
+                    <div id="ticketView" class="ticket-view" style="display: none;">
+                        <div class="ticket-header">
+                            <h3 class="ticket-subject"></h3>
+                            <span class="ticket-status"></span>
+                        </div>
+                        <div class="ticket-info">
+                            <p>Создан: <span class="ticket-date"></span></p>
+                            <p>Статус: <span class="ticket-status-text"></span></p>
+                        </div>
+                        <div class="ticket-messages"></div>
+                        <div class="ticket-reply">
+                            <textarea id="replyMessage" placeholder="Написать ответ..."></textarea>
+                            <button id="sendReply" class="btn-primary">Отправить</button>
+                        </div>
+                        <button id="backToTickets" class="btn-primary">Назад к тикетам</button>
+                    </div>
+                    
+                    <div id="adminPanel" class="admin-panel" style="display: none;">
+                        <h3>Панель администратора</h3>
+                        <div class="admin-tickets-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>東京喰種</h3>
+                    <p>Negr Pidoras & Tokyo Ghoul</p>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#quotes">Цитаты</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="https://t.me/eelicedcer" class="social-icon">TG</a>
+                    <a href="https://vk.com/pythonbich" class="social-icon">VK</a>
+                    <a href="https://lolz.live/kmskyni/" class="social-icon">LOLZ</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Всех рот ебали. Проект полностью сделан на коленке.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('dom-loaded');
+            const videoElement = document.querySelector('.video-container video');
+            
+            if (videoElement) {
+                videoElement.load();
+                videoElement.style.display = 'block';
+                videoElement.style.opacity = '1';
+                
+                videoElement.addEventListener('loadeddata', function() {
+                    document.body.classList.add('video-loaded');
+                });
+                
+                videoElement.addEventListener('playing', function() {
+                    document.body.classList.add('video-playing');
+                });
+                
+                videoElement.addEventListener('error', function(e) {
+                    document.body.classList.add('video-failed');
+                });
+                
+                const playPromise = videoElement.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {});
+                }
+                
+                setInterval(() => {
+                    if (videoElement.paused) {
+                        videoElement.play().catch(e => {});
+                    }
+                }, 2000);
+            }
+            
+            const backgroundMusic = document.getElementById('background-music');
+            
+            if (backgroundMusic) {
+                function playMusic() {
+                    backgroundMusic.volume = 0.3;
+                    const playPromise = backgroundMusic.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {}).catch(e => {});
+                    }
+                }
+                
+                playMusic();
+                
+                document.addEventListener('click', function() {
+                    if (backgroundMusic.paused) {
+                        playMusic();
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'm' || event.key === 'M' || event.key === 'ь' || event.key === 'Ь') {
+                        if (backgroundMusic.paused) {
+                            playMusic();
+                        } else {
+                            backgroundMusic.pause();
+                        }
+                    }
+                });
+            }
+            
+            function preloadImages() {
+                const imagesToPreload = [
+                    'https://wallpapercave.com/wp/wp1837540.png',
+                    'https://wallpapercave.com/wp/wp5207342.jpg',
+                    'https://wallpaperaccess.com/full/1079157.jpg'
+                ];
+                
+                imagesToPreload.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+            }
+        
+            preloadImages();
+            
+            const createTicketBtn = document.getElementById('createTicketBtn');
+            const myTicketsBtn = document.getElementById('myTicketsBtn');
+            const createTicketForm = document.getElementById('createTicketForm');
+            const myTicketsList = document.getElementById('myTicketsList');
+            const ticketView = document.getElementById('ticketView');
+            const adminPanel = document.getElementById('adminPanel');
+            const submitTicket = document.getElementById('submitTicket');
+            const backToTickets = document.getElementById('backToTickets');
+            const sendReply = document.getElementById('sendReply');
+            
+            let tickets = [];
+            const ADMIN_PASSWORD = 'zxc';
+            let keysPressed = {};
+            let currentUser = null;
+            
+            async function initTicketSystem() {
+                try {
+                    await initDatabase();
+                    await loadTicketsFromDB();
+                    
+                    createTicketBtn.addEventListener('click', function() {
+                        createTicketForm.style.display = 'block';
+                        myTicketsList.style.display = 'none';
+                        ticketView.style.display = 'none';
+                        adminPanel.style.display = 'none';
+                        
+                        createTicketBtn.classList.add('active');
+                        myTicketsBtn.classList.remove('active');
+                    });
+                    
+                    myTicketsBtn.addEventListener('click', function() {
+                        createTicketForm.style.display = 'none';
+                        myTicketsList.style.display = 'block';
+                        ticketView.style.display = 'none';
+                        adminPanel.style.display = 'none';
+                        
+                        createTicketBtn.classList.remove('active');
+                        myTicketsBtn.classList.add('active');
+                        
+                        renderTicketsList();
+                    });
+                    
+                    submitTicket.addEventListener('click', async function(e) {
+                        e.preventDefault();
+                        
+                        const name = document.getElementById('ticketName').value;
+                        const email = document.getElementById('ticketEmail').value;
+                        const subject = document.getElementById('ticketSubject').value;
+                        const message = document.getElementById('ticketMessage').value;
+                        
+                        if (!name || !email || !subject || !message) {
+                            showNotification('Пожалуйста, заполните все поля', 'warning');
+                            return;
+                        }
+                        
+                        const newTicket = {
+                            id: Date.now(),
+                            name: name,
+                            email: email,
+                            subject: subject,
+                            status: 'open',
+                            created: new Date().toISOString(),
+                            messages: [
+                                {
+                                    author: name,
+                                    email: email,
+                                    content: message,
+                                    time: new Date().toISOString(),
+                                    isAdmin: false
+                                }
+                            ]
+                        };
+                        
+                        tickets.push(newTicket);
+                        await saveTicketToDB(newTicket);
+                        
+                        document.getElementById('ticketName').value = '';
+                        document.getElementById('ticketEmail').value = '';
+                        document.getElementById('ticketSubject').value = '';
+                        document.getElementById('ticketMessage').value = '';
+                        
+                        showNotification('Тикет успешно создан!', 'success');
+                        myTicketsBtn.click();
+                    });
+                    
+                    backToTickets.addEventListener('click', function() {
+                        myTicketsBtn.click();
+                    });
+                    
+                    sendReply.addEventListener('click', async function() {
+                        const ticketId = parseInt(ticketView.dataset.ticketId);
+                        const replyMessage = document.getElementById('replyMessage').value;
+                        
+                        if (!replyMessage) {
+                            showNotification('Введите сообщение для ответа', 'warning');
+                            return;
+                        }
+                        
+                        const ticket = tickets.find(t => t.id === ticketId);
+                        if (ticket) {
+                            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                            
+                            ticket.messages.push({
+                                author: isAdmin ? 'Администратор' : ticket.name,
+                                email: ticket.email,
+                                content: replyMessage,
+                                time: new Date().toISOString(),
+                                isAdmin: isAdmin
+                            });
+                            
+                            if (isAdmin) {
+                                ticket.status = 'pending';
+                            }
+                            
+                            await saveTicketToDB(ticket);
+                            document.getElementById('replyMessage').value = '';
+                            viewTicket(ticketId);
+                        }
+                    });
+                    
+                    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                    if (isAdmin) {
+                        const adminBtn = document.createElement('button');
+                        adminBtn.textContent = 'Панель администратора';
+                        adminBtn.classList.add('btn-primary');
+                        adminBtn.id = 'adminBtn';
+                        
+                        adminBtn.addEventListener('click', function() {
+                            createTicketForm.style.display = 'none';
+                            myTicketsList.style.display = 'none';
+                            ticketView.style.display = 'none';
+                            adminPanel.style.display = 'block';
+                            
+                            createTicketBtn.classList.remove('active');
+                            myTicketsBtn.classList.remove('active');
+                            
+                            renderAdminPanel();
+                        });
+                        
+                        document.querySelector('.tickets-menu').appendChild(adminBtn);
+                    }
+                    
+                } catch (error) {
+                    showNotification('Произошла ошибка при инициализации системы тикетов.', 'error');
+                }
+            }
+            
+            function renderTicketsList() {
+                const ticketsContainer = myTicketsList.querySelector('.tickets-container');
+                const noTickets = myTicketsList.querySelector('.no-tickets');
+                const currentEmail = localStorage.getItem('currentEmail');
+                
+                const userTickets = currentEmail 
+                    ? tickets.filter(ticket => ticket.email === currentEmail)
+                    : [];
+                
+                if (userTickets.length === 0) {
+                    ticketsContainer.innerHTML = '';
+                    noTickets.style.display = 'block';
+                } else {
+                    noTickets.style.display = 'none';
+                    ticketsContainer.innerHTML = '';
+                    
+                    userTickets.forEach(ticket => {
+                        const ticketElement = document.createElement('div');
+                        ticketElement.className = 'ticket-item';
+                        ticketElement.dataset.ticketId = ticket.id;
+                        
+                        const statusClass = ticket.status;
+                        const statusText = {
+                            'open': 'Открыт',
+                            'pending': 'В обработке',
+                            'closed': 'Закрыт'
+                        }[ticket.status];
+                        
+                        ticketElement.innerHTML = `
+                            <div class="ticket-header">
+                                <h3 class="ticket-subject">${ticket.subject}</h3>
+                                <span class="ticket-status ${statusClass}">${statusText}</span>
+                            </div>
+                            <div class="ticket-date">Создан: ${new Date(ticket.created).toLocaleString()}</div>
+                        `;
+                        
+                        ticketElement.addEventListener('click', function() {
+                            viewTicket(ticket.id);
+                        });
+                        
+                        ticketsContainer.appendChild(ticketElement);
+                    });
+                }
+                
+                document.getElementById('ticketEmail').addEventListener('change', function() {
+                    localStorage.setItem('currentEmail', this.value);
+                });
+            }
+            
+            function viewTicket(ticketId) {
+                const ticket = tickets.find(t => t.id === parseInt(ticketId));
+                
+                if (ticket) {
+                    createTicketForm.style.display = 'none';
+                    myTicketsList.style.display = 'none';
+                    ticketView.style.display = 'block';
+                    adminPanel.style.display = 'none';
+                    
+                    ticketView.dataset.ticketId = ticket.id;
+                    
+                    const statusText = {
+                        'open': 'Открыт',
+                        'pending': 'В обработке',
+                        'closed': 'Закрыт'
+                    }[ticket.status];
+                    
+                    ticketView.querySelector('.ticket-subject').textContent = ticket.subject;
+                    ticketView.querySelector('.ticket-date').textContent = new Date(ticket.created).toLocaleString();
+                    ticketView.querySelector('.ticket-status-text').textContent = statusText;
+                    
+                    const messagesContainer = ticketView.querySelector('.ticket-messages');
+                    messagesContainer.innerHTML = '';
+                    
+                    ticket.messages.forEach(message => {
+                        const messageElement = document.createElement('div');
+                        messageElement.className = `message ${message.isAdmin ? 'admin' : 'user'}`;
+                        
+                        messageElement.innerHTML = `
+                            <div class="message-header">
+                                <span class="message-author">${message.author}</span>
+                                <span class="message-time">${new Date(message.time).toLocaleString()}</span>
+                            </div>
+                            <div class="message-content">${message.content}</div>
+                        `;
+                        
+                        messagesContainer.appendChild(messageElement);
+                    });
+                    
+                    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                    if (isAdmin && ticket.status !== 'closed') {
+                        const closeBtn = document.createElement('button');
+                        closeBtn.textContent = 'Закрыть тикет';
+                        closeBtn.className = 'btn-primary';
+                        closeBtn.style.marginRight = '10px';
+                        closeBtn.addEventListener('click', async function() {
+                            ticket.status = 'closed';
+                            await saveTicketToDB(ticket);
+                            showNotification('Тикет закрыт', 'success');
+                            viewTicket(ticketId);
+                        });
+                        
+                        ticketView.querySelector('.ticket-reply').prepend(closeBtn);
+                    }
+                }
+            }
+            
+            function renderAdminPanel() {
+                const adminTicketsList = adminPanel.querySelector('.admin-tickets-list');
+                adminTicketsList.innerHTML = '';
+                
+                if (tickets.length === 0) {
+                    adminTicketsList.innerHTML = '<p class="no-tickets">Нет тикетов для отображения</p>';
+                } else {
+                    tickets.forEach(ticket => {
+                        const ticketElement = document.createElement('div');
+                        ticketElement.className = 'ticket-item';
+                        ticketElement.dataset.ticketId = ticket.id;
+                        
+                        const statusClass = ticket.status;
+                        const statusText = {
+                            'open': 'Открыт',
+                            'pending': 'В обработке',
+                            'closed': 'Закрыт'
+                        }[ticket.status];
+                        
+                        ticketElement.innerHTML = `
+                            <div class="ticket-header">
+                                <h3 class="ticket-subject">${ticket.subject}</h3>
+                                <span class="ticket-status ${statusClass}">${statusText}</span>
+                            </div>
+                            <div class="ticket-info">
+                                <div class="ticket-date">Создан: ${new Date(ticket.created).toLocaleString()}</div>
+                                <div class="ticket-author">От: ${ticket.name} (${ticket.email})</div>
+                            </div>
+                        `;
+                        
+                        const actionsDiv = document.createElement('div');
+                        actionsDiv.className = 'ticket-actions';
+                        
+                        const viewBtn = document.createElement('button');
+                        viewBtn.className = 'btn-primary';
+                        viewBtn.textContent = 'Просмотреть';
+                        viewBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            viewTicket(ticket.id);
+                        });
+                        
+                        const statusBtn = document.createElement('button');
+                        statusBtn.className = 'btn-primary';
+                        
+                        if (ticket.status === 'open') {
+                            statusBtn.textContent = 'Взять в работу';
+                        } else if (ticket.status === 'pending') {
+                            statusBtn.textContent = 'Закрыть тикет';
+                        } else {
+                            statusBtn.textContent = 'Открыть снова';
+                        }
+                        
+                        statusBtn.addEventListener('click', async function(e) {
+                            e.stopPropagation();
+                            
+                            if (ticket.status === 'open') {
+                                ticket.status = 'pending';
+                            } else if (ticket.status === 'pending') {
+                                ticket.status = 'closed';
+                            } else {
+                                ticket.status = 'open';
+                            }
+                            
+                            await saveTicketToDB(ticket);
+                            renderAdminPanel();
+                        });
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'btn-primary';
+                        deleteBtn.textContent = 'Удалить';
+                        deleteBtn.style.backgroundColor = 'rgba(220, 53, 69, 0.8)';
+                        deleteBtn.addEventListener('click', async function(e) {
+                            e.stopPropagation();
+                            // Создаем модальное окно подтверждения вместо стандартного confirm
+                            const confirmModal = document.createElement('div');
+                            confirmModal.className = 'auth-modal';
+                            confirmModal.style.display = 'flex';
+                            
+                            confirmModal.innerHTML = `
+                                <div class="auth-modal-content" style="max-width: 300px;">
+                                    <h3 style="margin-bottom: 20px; font-size: 1.2rem; text-align: center;">Подтверждение</h3>
+                                    <p style="margin-bottom: 20px; text-align: center;">Вы уверены, что хотите удалить этот тикет?</p>
+                                    <div style="display: flex; gap: 10px; justify-content: center;">
+                                        <button id="confirmDelete" class="btn-primary" style="width: 45%;">Да</button>
+                                        <button id="cancelDelete" class="btn-primary" style="width: 45%; background-color: rgba(60, 60, 60, 0.5);">Отмена</button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            document.body.appendChild(confirmModal);
+                            
+                            document.getElementById('confirmDelete').addEventListener('click', async function() {
+                                await deleteTicketFromDB(ticket.id);
+                                tickets = tickets.filter(t => t.id !== ticket.id);
+                                renderAdminPanel();
+                                confirmModal.remove();
+                                showNotification('Тикет успешно удален', 'success');
+                            });
+                            
+                            document.getElementById('cancelDelete').addEventListener('click', function() {
+                                confirmModal.remove();
+                            });
+                            
+                            confirmModal.addEventListener('click', function(event) {
+                                if (event.target === confirmModal) {
+                                    confirmModal.remove();
+                                }
+                            });
+                        });
+                        
+                        actionsDiv.appendChild(viewBtn);
+                        actionsDiv.appendChild(statusBtn);
+                        actionsDiv.appendChild(deleteBtn);
+                        ticketElement.appendChild(actionsDiv);
+                        
+                        adminTicketsList.appendChild(ticketElement);
+                    });
+                }
+            }
+            
+            document.addEventListener('keydown', function(e) {
+                keysPressed[e.key.toLowerCase()] = true;
+                
+                if (keysPressed['z'] && keysPressed['x'] && keysPressed['c'] && keysPressed['a']) {
+                    const adminModal = document.createElement('div');
+                    adminModal.className = 'auth-modal';
+                    adminModal.style.display = 'flex';
+                    
+                    adminModal.innerHTML = `
+                        <div class="auth-modal-content" style="max-width: 400px; background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 30, 30, 0.9) 100%);">
+                            <span class="close-modal">&times;</span>
+                            <h3 style="margin-bottom: 30px; font-size: 1.5rem; text-align: center; color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">Вход для администратора</h3>
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <img src="https://wallpapercave.com/wp/wp1837540.png" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.2); box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 25px;">
+                                <input type="password" id="adminPasswordInput" placeholder="Введите пароль администратора" style="width: 100%; padding: 15px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 1rem; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) inset;">
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: center;">
+                                <button id="adminLoginBtn" class="btn-primary" style="width: 50%; padding: 12px; background: linear-gradient(135deg, rgba(60, 60, 60, 0.9), rgba(30, 30, 30, 0.9)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-weight: 500; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">Войти</button>
+                                <button id="adminCancelBtn" class="btn-primary" style="width: 50%; padding: 12px; background-color: rgba(30, 30, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: rgba(255, 255, 255, 0.8); cursor: pointer;">Отмена</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(adminModal);
+                    
+                    const adminPasswordInput = document.getElementById('adminPasswordInput');
+                    adminPasswordInput.focus();
+                    
+                    const closeButton = adminModal.querySelector('.close-modal');
+                    closeButton.addEventListener('click', function() {
+                        adminModal.remove();
+                    });
+                    
+                    adminModal.addEventListener('click', function(event) {
+                        if (event.target === adminModal) {
+                            adminModal.remove();
+                        }
+                    });
+                    
+                    const adminCancelBtn = document.getElementById('adminCancelBtn');
+                    adminCancelBtn.addEventListener('click', function() {
+                        adminModal.remove();
+                    });
+                    
+                    const adminLoginBtn = document.getElementById('adminLoginBtn');
+                    adminLoginBtn.addEventListener('click', function() {
+                        checkAdminPassword();
+                    });
+                    
+                    adminPasswordInput.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter') {
+                            checkAdminPassword();
+                        }
+                    });
+                    
+                    function checkAdminPassword() {
+                        const adminPassword = adminPasswordInput.value;
+                        if (adminPassword === ADMIN_PASSWORD) {
+                            localStorage.setItem('isAdmin', 'true');
+                            adminModal.remove();
+                            showNotification('Вы вошли как администратор!', 'success');
+                            location.reload();
+                        } else {
+                            adminPasswordInput.style.borderColor = 'rgba(255, 0, 0, 0.5)';
+                            adminPasswordInput.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.3)';
+                            setTimeout(() => {
+                                adminPasswordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                adminPasswordInput.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2) inset';
+                            }, 1000);
+                            showNotification('Неверный пароль!', 'error');
+                        }
+                    }
+                }
+            });
+            
+            document.addEventListener('keyup', function(e) {
+                delete keysPressed[e.key.toLowerCase()];
+            });
+            
+            initAuthSystem();
+            initTicketSystem();
+        });
+    </script>
+</body>
+</html>

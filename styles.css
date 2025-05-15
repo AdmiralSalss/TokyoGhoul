@@ -1,0 +1,200 @@
+:root {
+    --primary-color: #ff0000;
+    --secondary-color: #000;
+    --text-color: #fff;
+    --glitch-color: rgba(255, 0, 0, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Opacity One', sans-serif;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#bgVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) contrast(1.2);
+}
+
+.content {
+    position: relative;
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.glitch {
+    font-family: 'Nosifer', cursive;
+    font-size: 4rem;
+    position: relative;
+    text-shadow: 0 0 10px var(--primary-color);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--glitch-color);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 2px 0 var(--glitch-color);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.ghoul-mask {
+    width: 300px;
+    height: 300px;
+    background-image: url('https://i.imgur.com/XrBWcZJ.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 2rem 0;
+    filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.neon-button {
+    position: relative;
+    padding: 1rem 2rem;
+    font-family: 'Creepster', cursive;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    background: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.neon-button:hover {
+    background: var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+.button-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+}
+
+.neon-button:hover .button-glitch {
+    transform: translateX(100%);
+}
+
+.quotes-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.quote {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    opacity: 0.8;
+    text-shadow: 0 0 5px var(--primary-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: 'Creepster', cursive;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px var(--primary-color),
+                     0 0 20px var(--primary-color),
+                     0 0 30px var(--primary-color);
+    }
+    to {
+        text-shadow: 0 0 20px var(--primary-color),
+                     0 0 30px var(--primary-color),
+                     0 0 40px var(--primary-color);
+    }
+}
+
+@keyframes glitch-anim-1 {
+    0% {
+        clip-path: inset(80% 0 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 80% 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip-path: inset(0 80% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 80%);
+    }
+}
+
+@media (max-width: 768px) {
+    .glitch {
+        font-size: 2.5rem;
+    }
+
+    .ghoul-mask {
+        width: 200px;
+        height: 200px;
+    }
+
+    .neon-button {
+        font-size: 1.2rem;
+    }
+} 
